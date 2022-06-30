@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 const Chat = ({socket, room, username}) => {
 	const [currentMessage, setCurrentMessage] = useState("");
 	const [messageList, setMessageList] = useState([]);
+	const [isHidden, setIsHidden] = useState(true)
+
+	const messagesEndRef = useRef(null);
 
 	const sendMessageHandler = async (event) => {
 		event.preventDefault();
@@ -21,32 +24,40 @@ const Chat = ({socket, room, username}) => {
 		setCurrentMessage("")
 	}
 
+	const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView()
+  }
+
 	useEffect(() => {
-		socket.on("receive_message", data => {
+		const listener = data => {
 			setMessageList((prevList) => [...prevList, data])
-		})
-	}, [socket])
+		}
+		socket.on("receive_message", listener)
+		scrollToBottom();
+		return () => socket.off("receive_message", listener)
+	}, [socket, messageList])
 
 	return (
-		<div>
-			<div className='chatRoom-header'>
-				<h3>Room: {room}</h3>
+		<div className='chatRoom__container'>
+			<div className='chatRoom__header' onClick={()=>setIsHidden(!isHidden)} >
+				<h3>RoomID: {isHidden ? "Click to Show" : room}</h3>
 			</div>
-			<div className='chatRoom-body'>
+			<div className='chatRoom__body'>
 				{messageList.map((message, index) => {
 					return(
-						<div key={index}>
+						<div className='chatRoom__message' key={index}>
 							<p>{message.author}: {message.message}</p>
 						</div>
 					)
 				})}
+				<div ref={messagesEndRef}></div>
 			</div>
-			<div className='chatRoom-footer'>
+			<div className='chatRoom__footer'>
 				<form>
 					<input
 						type="text"
 						value={currentMessage}
-						placeholder="Type a message"
+						placeholder="Type a message..."
 						onChange={(event) => {
 							setCurrentMessage(event.target.value)
 						}}
