@@ -33,9 +33,23 @@ const Chat = ({socket, room, username}) => {
 			setMessageList((prevList) => [...prevList, data])
 		}
 		socket.on("receive_message", listener)
+
+		const listenMessage = arg => {
+			const data = {
+					room: room,
+					author: "connect",
+					message: arg,
+					time: 
+						new Date(Date.now()).getHours() +
+						new Date(Date.now()).getMinutes(),
+			};
+			setMessageList((prevList => [...prevList, data]))
+		}
+		socket.on("join_message", listenMessage)
+
 		scrollToBottom();
-		return () => socket.off("receive_message", listener)
-	}, [socket, messageList])
+		return () => socket.removeAllListeners();
+	}, [socket, messageList, room])
 
 	return (
 		<div className='chatRoom__container'>
@@ -46,7 +60,11 @@ const Chat = ({socket, room, username}) => {
 				{messageList.map((message, index) => {
 					return(
 						<div className='chatRoom__message' key={index}>
-							<p>{message.author}: {message.message}</p>
+							{
+								message.author === "connect" ? 
+									<p style={{color: "green"}}>{message.message}</p> :
+									<p>{message.author}: {message.message}</p>
+							}
 						</div>
 					)
 				})}

@@ -16,7 +16,11 @@ function App() {
 	const joinRoomHandler = (event) => {
 		event.preventDefault();
 		if (username !== "" && room !== "") {
-			socket.emit("join_room", room);
+			const data = {
+				username: username,
+				room: room
+			}
+			socket.emit("join_room", data);
 			setShowChat(true);
 		}
 	}
