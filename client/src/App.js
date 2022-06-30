@@ -3,6 +3,7 @@ import Chat from './Pages/Chat'
 import './App.css';
 import io from 'socket.io-client';
 import JoinRoom from './Pages/JoinRoom';
+import 'bulma/css/bulma.min.css';
 const PORT = "http://localhost:3001"
 
 const socket = io(PORT);

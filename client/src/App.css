@@ -1,3 +1,26 @@
-.App {
-  text-align: center;
+.joinChat__container {
+  width: 490px;
+  min-width: 300px;
+  margin: 0 auto;
+  margin-top: 10px;
+  min-height: 600px;
+}
+
+.joinChat__content {
+  border: 1px solid rgb(69, 125, 255);
+  border-radius: 5px;
+  margin-bottom: 8px;
+  padding: 10px;
+  background-color: #fff;
+  box-shadow: 0 0 4px 0 rgba(0,0,0,.5);
+}
+
+.joinChat__form-content {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.joinChat__about h3 {
+  font-weight: 600;
 }
