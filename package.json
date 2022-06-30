@@ -24,6 +24,7 @@
   "homepage": "https://github.com/gerarjon/drawing-app#readme",
   "dependencies": {
     "concurrently": "^7.2.2",
+    "cors": "^2.8.5",
     "express": "^4.18.1",
     "nodemon": "^2.0.18",
     "socket.io": "^4.5.1"
