@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Chat from './Pages/Chat'
 import './App.css';
 import io from 'socket.io-client';
+import JoinRoom from './Pages/JoinRoom';
 const PORT = "http://localhost:3001"
 
 const socket = io(PORT);
@@ -22,28 +23,16 @@ function App() {
 	return (
 		<div className="App">
 			{!showChat ? (
-				<div className="joinChat-container">
-					<form>
-						<h3>Join A Chat</h3>
-						<input
-							type="text"
-							placeholder="Username..."
-							onChange={(event) => {
-							setUsername(event.target.value);
-							}}
-						/>
-						<input
-							type="text"
-							placeholder="Room ID..."
-							onChange={(event) => {
-							setRoom(event.target.value);
-							}}
-						/>
-						<button onClick={joinRoomHandler}>Join A Room</button>
-					</form>
-				</div>
+				<JoinRoom 
+					setUsername={setUsername}
+					setRoom={setRoom}
+					joinRoomHandler={joinRoomHandler}
+				/>
 			) : (
-				<Chat socket={socket} username={username} room={room} />
+				<Chat 
+					socket={socket} 
+					username={username} 
+					room={room} />
 			)}
 		</div>
 	);
