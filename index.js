@@ -15,12 +15,14 @@ io.on("connection", (socket) => {
 	console.log("User Connected", socket.id)
 
 	socket.on("join_room", data => {
+		const user = {...data, id:socket.id, score: 0}
 		socket.join(data.room);
-		socket.to(data.room).emit("join_message", `${data.username} has connected`)
-		console.log(`User(${socket.id}) has joined room:${data.room}`);
+		socket.to(data.room).emit("join_message", `${user.username} has connected`)
+		console.log(`User(${socket.id}||${user.username}) has joined room:${data.room}`);
 	})
 
 	socket.on("send_message", (data) => {
+		// socket.to(data.room).emit("receive_message", data);
 		socket.to(data.room).emit("receive_message", data);
 	})
 

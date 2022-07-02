@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
+import Canvas from '../Modules/Canvas';
 
 const Chat = ({socket, room, username}) => {
 	const [currentMessage, setCurrentMessage] = useState("");
 	const [messageList, setMessageList] = useState([]);
+	// const [userList, setUserList] = useState([]);
 	const [isHidden, setIsHidden] = useState(true)
 
 	const messagesEndRef = useRef(null);
@@ -52,41 +54,61 @@ const Chat = ({socket, room, username}) => {
 	}, [socket, messageList, room])
 
 	return (
-		<div className='chatRoom__container'>
-			<div className='chatRoom__header' onClick={()=>setIsHidden(!isHidden)} >
-				<h3>RoomID: {isHidden ? "Click to Show" : room}</h3>
+		<div className='main__container container' id="main">
+			{/* player room */}
+			<div className='playerRoom__container'>
+
 			</div>
-			<div className='chatRoom__body'>
-				{messageList.map((message, index) => {
-					return(
-						<div className='chatRoom__message' key={index}>
-							{
-								message.author === "connect" ? 
-									<p style={{color: "green"}}>{message.message}</p> :
-									<p>{message.author}: {message.message}</p>
-							}
-						</div>
-					)
-				})}
-				<div ref={messagesEndRef}></div>
+
+
+			{/* canvas */}
+			<div className='canvas__container'>
+				<div className='canvas__body'>
+					<Canvas />
+				</div>
+				<div className='canvas__footer'>
+
+				</div>
 			</div>
-			<div className='chatRoom__footer'>
-				<form>
-					<input
-						type="text"
-						value={currentMessage}
-						placeholder="Type a message..."
-						onChange={(event) => {
-							setCurrentMessage(event.target.value)
-						}}
-						onKeyPress={(event) => {
-							event.key === "Enter" && sendMessageHandler(event)
-						}}
-					/>
-					<button onClick={sendMessageHandler}>
-						&#9658;
-					</button>
-				</form>
+
+
+			{/* chat room  */}
+			<div className='chatRoom__container'>
+				<div className='chatRoom__header' onClick={()=>setIsHidden(!isHidden)} >
+					<h3>RoomID: {isHidden ? "Click to Show" : room}</h3>
+				</div>
+				<div className='chatRoom__body'>
+					{messageList.map((message, index) => {
+						return(
+							<div className='chatRoom__message' key={index}>
+								{
+									message.author === "connect" ? 
+										<p style={{color: "green" , fontWeight: "bold"}}>{message.message}</p> :
+										<p><strong>{message.author}:</strong> {message.message}</p>
+								}
+							</div>
+						)
+					})}
+					<div ref={messagesEndRef}></div>
+				</div>
+				<div className='chatRoom__footer'>
+					<form>
+						<input
+							type="text"
+							value={currentMessage}
+							placeholder="Enter message..."
+							onChange={(event) => {
+								setCurrentMessage(event.target.value)
+							}}
+							onKeyPress={(event) => {
+								event.key === "Enter" && sendMessageHandler(event)
+							}}
+						/>
+						<button onClick={sendMessageHandler}>
+							&#9658;
+						</button>
+					</form>
+				</div>
 			</div>
 		</div>
 	)

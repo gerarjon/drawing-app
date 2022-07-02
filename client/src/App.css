@@ -1,3 +1,5 @@
+/* JoinRoom.js */
+/* ------------------------------ */
 .joinChat__container {
   width: 490px;
   min-width: 300px;
@@ -25,15 +27,55 @@
   font-weight: 600;
 }
 
+
+/* Chat.js */
+/* ------------------------------- */
+
+.main__container {
+  width: 90%;
+  height: 550px;
+  display: flex;
+  gap: 5px;
+}
+
+#main {
+  margin-top: 10vh;
+ 
+}
+
+.playerRoom__container {
+  border: 1px solid #000;
+  border-radius: 2px;
+  width: 20rem
+}
+
+
+.canvas__container {
+  border: 1px solid #000;
+  border-radius: 2px;
+}
+
+.canvas__body {
+  position: relative;
+  border: 1px solid green;
+  width: 800px;
+  height: 100%;
+}
+
+#canvas {
+  border: 1px solid red;
+  background-color: #FFF;
+}
+
 .chatRoom__container {
   margin: 0 auto;
-  height: 500px;
-  width: 300px;
-  border: 1px solid grey;
+  width: 30rem;
+  border: 1px solid #000;
   border-radius: 2px;
   display: flex;
   flex-direction: column;
-  background-color: #fff;
+  background-color: rgb(242, 242, 242);
+  overflow: auto;
 }
 
 .chatRoom__header {
@@ -50,6 +92,16 @@
   padding: 2px 5px;
   height: calc(100% - 34px);
   overflow: auto;
+  overflow-wrap: break-word;
+}
+
+.chatRoom__message {
+  font-size: 0.9rem;
+  padding: 2px 4px;
+}
+
+.chatRoom__message:nth-child(even) {
+  background-color: #fff;
 }
 
 .chatRoom__footer form {
@@ -62,12 +114,7 @@
   display: table;
 }
 
-.chatRoom__footer {
-  height: 34px;
-}
-
 .chatRoom__footer input {
-  font-size: 1em;
   padding: 5px;
   width: calc(100% - 30px);
   float: left;
@@ -75,7 +122,6 @@
 
 .chatRoom__footer button {
   padding: 5px 0;
-  font-size: 1em;
   width: 30px;
   float: right;
 }
