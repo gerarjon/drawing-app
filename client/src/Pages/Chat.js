@@ -54,7 +54,7 @@ const Chat = ({socket, room, username}) => {
 	}, [socket, messageList, room])
 
 	return (
-		<div className='main__container container' id="main">
+		<div className='main__container' id="main">
 			{/* player room */}
 			<div className='playerRoom__container'>
 
